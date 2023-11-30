@@ -1,69 +1,152 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-void swap(char *arr[], char *arr3[]) {
-        char temp = arr[1000];
-        arr[1000] = arr3[1000];
-        arr3[1000] = temp;
-    }
-
-int main(){
+#include <stdio.h>
+void reverse(int arr[], int lenghth)
+{
 	int i;
-	int size;
-	char arr[1000];
-	char arr2[1000];
-	char arr3[1000];
-	do{
-		printf("		MENU\n");
-		printf("1. nhap vao chuoi mang.\n");
-		printf("2. in ra mang\n");
-		printf("3. sao chep mang vao mang khac\n");
-		printf("4. nhap vao mang khac doi cho 2 mang voi nhau\n");
-		printf("5. dao nguoc mang\n");
-		printf("6. nhap vao 1 ki tu tim ki tu do trong mang\n");
-		printf("7. thoat\n");
-		printf("lua chon cua ban:");
-		int choice;
-		scanf("%d",&choice);
-		
-		switch(choice){
-			case 1:
-				fflush(stdin);
-				printf("nhap mang:");
-				gets(arr);
-			break;
-			case 2:
-				fflush(stdin);
-				char *str = &arr;
-				printf("in ra mang:");
-				puts(str);
-			break;
-			case 3:
-				fflush(stdin);
-				*arr2 = &arr;
-				printf("sao chep sang mang arr2:%s\n",arr2);
-			break;
-			case 4:
-				fflush(stdin);
-				printf("nhap vao mang thu 2:");
-				gets(arr3);
-				printf("truoc khi doi arr=%s, arr2=%s\n",arr,arr3);
-				swap(&arr,&arr3);
-				printf("sau khi doi arr = %s, arr2 = %s\n",*arr,*arr3);
-//				puts(arr);
-//				puts(arr2);
-			break;
-			case 5:
-				
-			break;
-			case 6:
-				
-			break;
-			case 7:
-				exit(0);
-			break;
-			
-		}
-	}while(0==0);
+    int size;
+    int swap;
+    for ( i = 0; i < lenghth / 2; i++)
+    {
+        size = lenghth - 1 - i;
+        swap = arr[i];
+        arr[i] = arr[size];
+        arr[size] = swap;
+    }
 }
+int search(int arr[], int length, int findValue)
+{
+	int i;
+    for ( i = 0; i < length; i++)
+    {
+        if (arr[i] == findValue)
+        {
+            return i;
+        }
+    }
+}
+int main()
+{
+	int i;
+    int findValue, swap;
+    int arr[100];
+    int currentIndex = 0, n, currentIndex1 = 0;
+    int arr2[100];
+    int arr1[100];
+    do
+    {
+        printf("\n----------------------MEUNU--------------------\n");
+        printf("1.Nhap vao mang\n");
+        printf("2.In ra mang\n");
+        printf("3.Sao chep mang vao mang khac\n");
+        printf("4.Nhap vao mang khac, doi cho 2 mang voi nhau\n");
+        printf("5.Dao nguoc mang\n");
+        printf("6.Nhap vao 1 ky tu, tim kiem ky tu do trong mang\n");
+        printf("7.Thoat\n");
+        int choice;
+        printf("Nhap lua chon cua ban");
+        scanf("%d", &choice);
+        switch (choice)
+        {
+        case 1:
+            printf("Nhap so phan tu cua muon them vao mang");
+            scanf("%d", &n);
+            for ( i = 0; i < n; i++)
+            {
+                printf("arr[%d]=", i);
+                scanf("%d", &arr[i]);
+                currentIndex++;
+            }
+            break;
+        case 2:
+            for ( i = 0; i < currentIndex; i++)
+            {
+                printf("arr[%d]=%d\n", i, arr[i]);
+            }
+            break;
+        case 3:
+            for ( i = 0; i < currentIndex; i++)
+            {
+                arr2[i] = arr[i];
+            }
+            printf("Mang da sao chep la");
+            for ( i = 0; i < currentIndex; i++)
+            {
+                printf("arr2[%d]=%d\n", i, arr2[i]);
+            }
+            break;
+        case 4:
+            printf("Nhap so phan tu cua muon them vao mang");
+            scanf("%d", &n);
+            for ( i = 0; i < n; i++)
+            {
+                printf("arr1[%d]=", i);
+                scanf("%d", &arr1[i]);
+                currentIndex1++;
+            }
+            if (currentIndex > currentIndex1)
+            {
+                for ( i = 0; i < currentIndex; i++)
+                {
+                    if (i < currentIndex1)
+                    {
+                        swap = arr[i];
+                        arr[i] = arr1[i];
+                        arr1[i] = swap;
+                    }
+                    else
+                    {
+                        arr1[i] = arr[i];
+                        arr[i] = "\0";
+                    }
+                }
+                swap = currentIndex;
+                currentIndex = currentIndex1;
+                currentIndex1 = swap;
+            }
+            else
+            {
+                for ( i = 0; i < currentIndex1; i++)
+                {
+                    if (i < currentIndex)
+                    {
+                        swap = arr[i];
+                        arr[i] = arr1[i];
+                        arr1[i] = swap;
+                    }
+                    else
+                    {
+                        arr[i] = arr1[i];
+                        arr1[i] = "\0";
+                    }
+                }
+                swap = currentIndex;
+                currentIndex = currentIndex1;
+                currentIndex1 = swap;
+            }
+            printf("arr ");
+            for (i = 0; i < currentIndex; i++)
+            {
+                printf("arr[%d]=%d\n", i, arr[i]);
+            }
 
+            break;
+        case 5:
+            reverse(arr, currentIndex);
+
+            for ( i = 0; i < currentIndex; i++)
+            {
+                printf("arr[%d]=%d\n", i, arr[i]);
+            }
+            break;
+        case 6:
+            printf("Nhap phan tu can tim");
+            scanf("%d", &findValue);
+            printf("Vi tri phan tu giong voi phan tu can tim trong mang la %d", search(arr, currentIndex, findValue));
+            break;
+        case 7:
+            return 0;
+        default:
+            printf("Nhap tu 1-7");
+            break;
+        }
+    } while (1);
+}
